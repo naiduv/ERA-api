@@ -1,0 +1,49 @@
+select * from public.customer
+select gen_random_uuid ()
+
+delete from customer;
+insert into customer values (1, point(38.226837, -85.701025))
+
+delete from assistant
+insert into assistant values (1, point(38.226837, -85.731025));
+insert into assistant values (2, point(38.226837, -85.741025));
+insert into assistant values (3, point(38.226837, -85.751025));
+insert into assistant values (4, point(38.226837, -85.761025));
+insert into assistant values (5, point(38.226837, -85.771025));
+insert into assistant values (6, point(38.226837, -85.781025));
+insert into assistant values (7, point(38.226837, -85.791025));
+insert into assistant values (8, point(38.226837, -85.799025));
+
+delete * from assistant;
+
+select * from customer;
+select * from assistant;
+
+--get 5 closest a's to a c
+select a.id assistant_id, (c.location <@> a.location) distance_miles from assistant a
+join customer c on (c.location <@> a.location) < 10
+where c.id = 1
+order by 2 
+limit 5;
+
+-- update location of a assistant
+update assistant
+set location = point(38.226837, -85.781099)
+where id = 6;
+
+-- reserve a assistant to a customer
+insert into reservation (customer_id, assistant_id, is_reserved, created_on, updated_on) values(1, 2, true, now(), null);
+update assistant set is_reserved=true where id = 2;
+
+select * from reservation;
+select * from assistant;
+
+-- release a assistant from a customer
+update reservation
+set is_reserved=false, updated_on = now()
+where customer_id = 1 and assistant_id = 2 and is_reserved = true
+
+update assistant set is_reserved=false
+where id = 2
+
+

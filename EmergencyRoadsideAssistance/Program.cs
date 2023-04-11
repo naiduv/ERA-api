@@ -1,10 +1,13 @@
+using Dapper;
+using EmergencyRoadsideAssistance.Services;
+
 namespace EmergencyRoadsideAssistance
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
-            var builder = WebApplication.CreateBuilder(args);
+            var builder = WebApplication.CreateBuilder();
 
             // Add services to the container.
 
@@ -13,16 +16,20 @@ namespace EmergencyRoadsideAssistance
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddScoped<IRoadsideAssistanceService, RoadsideAssistanceService>();
+            builder.Services.AddScoped<IDBService, DBService>();
+
+            //postgres
+            DefaultTypeMap.MatchNamesWithUnderscores = true;
+
+
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+            // Configure the HTTP request pipeline.            
+            app.UseSwagger();
+            app.UseSwaggerUI();            
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseAuthorization();
 

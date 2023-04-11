@@ -1,0 +1,235 @@
+{
+	"info": {
+		"_postman_id": "d2e325d1-aeae-41bc-a475-e47573cd35ff",
+		"name": "Era",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1634975"
+	},
+	"item": [
+		{
+			"name": "Update Assistant",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"assistantId\": 1,\r\n  \"location\": {\r\n    \"latitude\": 38.226837,\r\n    \"longitude\": -85.931025\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/Assistant/UpdateAssistant",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"Assistant",
+						"UpdateAssistant"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Nearest",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"assistantId\": 1,\r\n  \"location\": {\r\n    \"latitude\": 38.226837,\r\n    \"longitude\": -85.931025\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/Assistant/GetNearestAssistant?Latitude=38.1&Longitude=-85.4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"Assistant",
+						"GetNearestAssistant"
+					],
+					"query": [
+						{
+							"key": "Latitude",
+							"value": "38.1"
+						},
+						{
+							"key": "Longitude",
+							"value": "-85.4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Assistants",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"assistantId\": 1,\r\n  \"location\": {\r\n    \"latitude\": 38.226837,\r\n    \"longitude\": -85.931025\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/Assistant/GetAll",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"Assistant",
+						"GetAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Reservations",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"assistantId\": 1,\r\n  \"location\": {\r\n    \"latitude\": 38.226837,\r\n    \"longitude\": -85.931025\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/Reservation/GetAll",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"Reservation",
+						"GetAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Active Reservations",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"assistantId\": 1,\r\n  \"location\": {\r\n    \"latitude\": 38.226837,\r\n    \"longitude\": -85.931025\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/Reservation/GetAll",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"Reservation",
+						"GetAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reserve",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"customerId\": 2,\r\n  \"location\": {\r\n    \"latitude\": 38,\r\n    \"longitude\": -86\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/Reservation/Reserve",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"Reservation",
+						"Reserve"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Release",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"customerId\": 1,\r\n  \"assistantId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/Reservation/Release",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"Reservation",
+						"Release"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

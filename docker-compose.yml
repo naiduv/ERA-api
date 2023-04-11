@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  emergencyroadsideassistance:
+    image: ${DOCKER_REGISTRY-}emergencyroadsideassistance
+    build:
+      context: .
+      dockerfile: EmergencyRoadsideAssistance\Dockerfile
+    ports:
+      - 8080:80
+    environment:
+        httpPort: 80
+        launchUrl: "{Scheme}://{ServiceHost}:{ServicePort}/swagger"
+        publishAllPorts: true
+
+  db:
+    image: stellirin/postgres-windows
+    restart: always
+    ports:
+      - 15432:5432
+    environment:
+        POSTGRES_USER: era
+        POSTGRES_PASSWORD: password
+    volumes:
+      - .\EmergencyRoadsideAssistance\docker-entrypoint-initdb:C:\docker-entrypoint-initdb.d

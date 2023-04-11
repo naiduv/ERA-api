@@ -1,4 +1,4 @@
-namespace EmergencyRoadsideAssistance
+namespace EmergencyRoadsideAssistance.Models
 {
     public class WeatherForecast
     {
