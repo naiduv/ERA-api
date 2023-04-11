@@ -36,16 +36,16 @@ namespace EmergencyRoadsideAssistance.Controllers
 
 
         [HttpPost("Reserve")]
-        public ActionResult Reserve([FromBody] ReserveRequest request)
+        public async Task<Assistant> Reserve([FromBody] ReserveRequest request)
         {
-            var assistant = _roasideAssistanceService.ReserveAssistant(new Customer(request.CustomerId), request.Location);
-            return Ok(assistant);
+            var assistant = await _roasideAssistanceService.ReserveAssistant(new Customer(request.CustomerId), request.Location);
+            return assistant;
         }
 
         [HttpPut("Release")]
-        public ActionResult Release([FromBody] ReleaseRequest request)
+        public async Task<ActionResult> Release([FromBody] ReleaseRequest request)
         {
-            _roasideAssistanceService.ReleaseAssistant(new Customer(request.CustomerId), new Assistant(request.AssistantId));
+            await _roasideAssistanceService.ReleaseAssistant(new Customer(request.CustomerId), new Assistant(request.AssistantId));
             return Ok();
         }
 

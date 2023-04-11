@@ -16,6 +16,7 @@ namespace IntegrationTests
         [Fact]
         public void ShouldCreateService()
         {
+            DefaultTypeMap.MatchNamesWithUnderscores = true;
             var mock = new Mock<ILogger<RoadsideAssistanceService>>();
             ILogger<RoadsideAssistanceService> logger = mock.Object;
 
@@ -41,6 +42,7 @@ namespace IntegrationTests
         [InlineData(2, 2)]
         public async void ReturnsCorrectNumberOfNearestAssistants(int limit, int expected)
         {
+            DefaultTypeMap.MatchNamesWithUnderscores = true;
             var dbService = new DBService(null);
 
             var roadsideAssistanceService = new RoadsideAssistanceService(null, dbService);
@@ -52,8 +54,8 @@ namespace IntegrationTests
         [Fact]
         public async void ShouldUpdateTheCorrectAssistant()
         {
-            var dbService = new DBService(null);
             DefaultTypeMap.MatchNamesWithUnderscores = true;
+            var dbService = new DBService(null);
 
             var roadsideAssistanceService = new RoadsideAssistanceService(null, dbService);
             await roadsideAssistanceService.UpdateAssistantLocation(new Assistant(1), new Geolocation() { Latitude = 10, Longitude = 10 });
@@ -75,6 +77,7 @@ namespace IntegrationTests
         [Fact]
         public async void ShouldReturnTheCorrectClosestAssistant()
         {
+            DefaultTypeMap.MatchNamesWithUnderscores = true;
             var dbService = new DBService(null);
 
             var roadsideAssistanceService = new RoadsideAssistanceService(null, dbService);
@@ -88,6 +91,7 @@ namespace IntegrationTests
         [Fact]
         public async void ShouldReserveTheCorrectClosestAssistant()
         {
+            DefaultTypeMap.MatchNamesWithUnderscores = true;
             var dbService = new DBService(null);
 
             var roadsideAssistanceService = new RoadsideAssistanceService(null, dbService);
@@ -101,6 +105,7 @@ namespace IntegrationTests
         [Fact]
         public async void ShouldReleaseTheReservedAssistant()
         {
+            DefaultTypeMap.MatchNamesWithUnderscores = true;
             var dbService = new DBService(null);
 
             var roadsideAssistanceService = new RoadsideAssistanceService(null, dbService);
@@ -114,9 +119,9 @@ namespace IntegrationTests
         [Fact]
         public async void ShouldNotReserveAnotherAssistant()
         {
-            var dbService = new DBService(null);
             DefaultTypeMap.MatchNamesWithUnderscores = true;
 
+            var dbService = new DBService(null);
             var roadsideAssistanceService = new RoadsideAssistanceService(null, dbService);
             await roadsideAssistanceService.UpdateAssistantLocation(new Assistant(1), new Geolocation() { Latitude = 10, Longitude = 10 });
 

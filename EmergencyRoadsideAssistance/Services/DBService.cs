@@ -50,7 +50,7 @@ namespace EmergencyRoadsideAssistance.Services
 
         public async Task<Assistant> CustomerReservation(Customer customer)
         {
-            return await _db.QueryFirstOrDefaultAsync<Assistant>($@"select a.id, a.is_reserved from public.reservation r 
+            return await _db.QueryFirstOrDefaultAsync<Assistant>($@"select a.id, a.is_reserved, a.location as loc_point from public.reservation r 
                                                                     join public.assistant a on r.assistant_id = a.id 
                                                                     join public.customer c on r.customer_id = c.id 
                                                                     where c.id = {customer.Id} and r.is_reserved = true;");
