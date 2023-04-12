@@ -14,7 +14,7 @@ namespace EmergencyRoadsideAssistance.Services
 
         public DBService(ILogger<DBService> logger)
         {
-            _db = new NpgsqlConnection("Host=192.168.1.79;Port=15432;Username=era;Password=password");
+            _db = new NpgsqlConnection("Host=host.docker.internal;Port=15432;Username=era;Password=password");
             _logger = logger;
         }
 

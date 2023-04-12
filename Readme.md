@@ -68,7 +68,6 @@ A Postman collection is provided with all endpoints for local testing postman_co
 - API user will provide properly formatted, valid input json
 
 ## Compromises
-- Some local issue with Npgsql prevents connecting to localhost/127.0.0.1, had to use DHCP IP 
 - Only did integration tests, since DB heavy. These require postgres running in docker locally.
 - Used Task/Async functionality in interface (so it is slightly different)
 - Needs better logging
