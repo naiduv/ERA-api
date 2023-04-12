@@ -1,5 +1,20 @@
+
+#top {
+    height: 80%;
+    width: 90%;
+}
+
 #map 
 { 
-    height: 80%; 
-    width: 70%;
+    height: 100%; 
+    width: 80%;
+}
+
+#globe{
+    margin-left: 20px;
+    width: 18%
+}
+
+#globe_img {
+    width: 90%
 }

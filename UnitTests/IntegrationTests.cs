@@ -94,6 +94,8 @@ namespace IntegrationTests
             DefaultTypeMap.MatchNamesWithUnderscores = true;
             var dbService = new DBService(null);
 
+            await dbService.ReleaseAssistants();
+
             var roadsideAssistanceService = new RoadsideAssistanceService(null, dbService);
             await roadsideAssistanceService.UpdateAssistantLocation(new Assistant(1), new Geolocation() { Latitude = 10, Longitude = 10 });
 
@@ -124,6 +126,8 @@ namespace IntegrationTests
             var dbService = new DBService(null);
             var roadsideAssistanceService = new RoadsideAssistanceService(null, dbService);
             await roadsideAssistanceService.UpdateAssistantLocation(new Assistant(1), new Geolocation() { Latitude = 10, Longitude = 10 });
+
+            await dbService.ReleaseAssistants();
 
             var assistant = await roadsideAssistanceService.ReserveAssistant(new Customer(1), new Geolocation() { Latitude = 10, Longitude = 10 });
             Assert.Equal(1, assistant?.Id);

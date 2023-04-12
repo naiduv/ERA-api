@@ -8,6 +8,7 @@ namespace EmergencyRoadsideAssistance.Services
         Task<IEnumerable<Assistant>> FindNearestAssistants(Geolocation location, int limit);
         Task ReserveAssistant(Customer customer, Assistant assistant);
         Task ReleaseAssistant(Customer customer, Assistant assistant);
+        Task ReleaseAssistants();
         Task<bool> CustomerHasReservation(Customer customer);
         Task<Assistant> CustomerReservation(Customer customer);
         Task<IEnumerable<Reservation>> GetReservations(bool active);

@@ -32,6 +32,41 @@ window.onload = (event) => {
     map = L.map('map').setView([38.226837, -85.731025], 13);
     markerGroup = L.layerGroup().addTo(map);
 
+    let Position = L.Control.extend({
+        _container: null,
+        options: {
+            position: 'bottomleft'
+        },
+
+        onAdd: function (map) {
+            var latlng = L.DomUtil.create('div', 'mouseposition');
+            this._latlng = latlng;
+            return latlng;
+        },
+
+        updateHTML: function (lat, lng) {
+            var latlng = lat + " " + lng;
+            //this._latlng.innerHTML = "Latitude: " + lat + "   Longitiude: " + lng;
+            this._latlng.innerHTML = "LatLng: " + latlng;
+        }
+    });
+
+    map.addEventListener('mousemove', (event) => {
+        let lat = Math.round(event.latlng.lat * 100000) / 100000;
+        let lng = Math.round(event.latlng.lng * 100000) / 100000;
+        this.position.updateHTML(lat, lng);
+    });
+
+    map.addEventListener('click', (event) => {
+        let lat = Math.round(event.latlng.lat * 100000) / 100000;
+        let lng = Math.round(event.latlng.lng * 100000) / 100000;
+        navigator.clipboard.writeText(lat + " " +lng);
+    });
+
+
+    this.position = new Position();
+    map.addControl(this.position);
+
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -41,6 +76,20 @@ window.onload = (event) => {
     loadAssistants()
 }
 
+function loadAssistants() {
+    markerGroup.remove();
+    markerGroup = L.layerGroup().addTo(map);
+
+    var assistants = getAssistants().then(assistants => {
+        assistants.forEach(assistant => {
+            const loc = assistant.location;
+            const reserved = assistant.isReserved;
+            L.marker([loc.latitude, loc.longitude], { icon: reserved ? greyIcon : greenIcon, title: loc.latitude + ", " + loc.longitude }).bindTooltip(assistant.id.toString(), {permanent: true, direction:'bottom'}).addTo(markerGroup);
+        });
+    })
+
+
+}
 
 const getAssistants = async () => {
     const response = await fetch('http://localhost:8080/Assistant/GetAll');
@@ -59,7 +108,7 @@ const getNearest = async (latitude, longitude) => {
     assistants.forEach(assistant => {
         const loc = assistant.location;
         const reserved = assistant.isReserved;
-        L.marker([loc.latitude, loc.longitude], { icon: reserved ? greyIcon : greenIcon, title: assistant.id + ": " +loc.latitude + ", " + loc.longitude }).addTo(markerGroup);
+        L.marker([loc.latitude, loc.longitude], { icon: reserved ? greyIcon : greenIcon, title: assistant.id + ": " + loc.latitude + ", " + loc.longitude }).bindTooltip(assistant.id.toString(), { permanent: true, direction: 'bottom' }).addTo(markerGroup);
     });
 }
 
@@ -78,20 +127,6 @@ const updateAssistant = async (id, latitude, longitude) => {
     });
 
     loadAssistants()
-}
-
-function loadAssistants() {
-    markerGroup.remove();
-    markerGroup = L.layerGroup().addTo(map);
-
-    var assistants = getAssistants().then(assistants => {
-        assistants.forEach(assistant => {
-            const loc = assistant.location;
-            const reserved = assistant.isReserved;
-            L.marker([loc.latitude, loc.longitude], { icon: reserved ? greyIcon : greenIcon, title: loc.latitude + ", " + loc.longitude }).addTo(markerGroup);
-        });
-    })
-
 }
 
 const reserve = async (id, latitude, longitude) => {
@@ -118,7 +153,7 @@ const reserve = async (id, latitude, longitude) => {
     const assistant = await response.json();
     const loc = assistant.location;
     const reserved = assistant.isReserved;
-    L.marker([loc.latitude, loc.longitude], { icon: greyIcon, title: "a"+ assistant.id + ": " + loc.latitude + ", " + loc.longitude }).addTo(markerGroup);
+    L.marker([loc.latitude, loc.longitude], { icon: greyIcon, title: "a" + assistant.id + ": " + loc.latitude + ", " + loc.longitude }).bindTooltip(assistant.id.toString(), { permanent: true, direction: 'bottom' }).addTo(markerGroup);
 
 }
 

@@ -43,6 +43,13 @@ namespace EmergencyRoadsideAssistance.Services
                                       update customer set has_reservation=false where id = {customer.Id};");
         }
 
+        public async Task ReleaseAssistants()
+        {
+            await _db.ExecuteAsync($@"update reservation set is_reserved=false, updated_on = now() where is_reserved = true; 
+                                      update assistant set is_reserved=false;
+                                      update customer set has_reservation=false;");
+        }
+
         public async Task<bool> CustomerHasReservation(Customer customer)
         {
             return await _db.QueryFirstOrDefaultAsync<bool>($@"select has_reservation from public.customer where id = {customer.Id};");
@@ -50,7 +57,7 @@ namespace EmergencyRoadsideAssistance.Services
 
         public async Task<Assistant> CustomerReservation(Customer customer)
         {
-            return await _db.QueryFirstOrDefaultAsync<Assistant>($@"select a.id, a.is_reserved, a.location as loc_point from public.reservation r 
+            return await _db.QueryFirstOrDefaultAsync<Assistant>($@"select a.id, r.is_reserved, a.location as loc_point from public.reservation r 
                                                                     join public.assistant a on r.assistant_id = a.id 
                                                                     join public.customer c on r.customer_id = c.id 
                                                                     where c.id = {customer.Id} and r.is_reserved = true;");
