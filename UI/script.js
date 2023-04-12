@@ -60,7 +60,7 @@ window.onload = (event) => {
     map.addEventListener('click', (event) => {
         let lat = Math.round(event.latlng.lat * 100000) / 100000;
         let lng = Math.round(event.latlng.lng * 100000) / 100000;
-        navigator.clipboard.writeText(lat + " " +lng);
+        navigator.clipboard.writeText(lat + "," +lng);
     });
 
 
@@ -98,7 +98,10 @@ const getAssistants = async () => {
 }
 
 
-const getNearest = async (latitude, longitude) => {
+const getNearest = async (location) => {
+    const latitude = parseFloat(location.split(",")[0]);
+    const longitude = parseFloat(location.split(",")[1]);
+
     const response = await fetch('http://localhost:8080/Assistant/GetNearestAssistant?Latitude=' + latitude + '&Longitude=' + longitude);
     markerGroup.remove();
     markerGroup = L.layerGroup().addTo(map);
@@ -112,7 +115,8 @@ const getNearest = async (latitude, longitude) => {
     });
 }
 
-const updateAssistant = async (id, latitude, longitude) => {
+const updateAssistant = async (id, location) => {
+    const [latitude, longitude] = parseLatLong(location);
     const data = {
         "assistantId": id,
         "location": {
@@ -129,7 +133,10 @@ const updateAssistant = async (id, latitude, longitude) => {
     loadAssistants()
 }
 
-const reserve = async (id, latitude, longitude) => {
+const reserve = async (id, location) => {
+    const latitude = parseFloat(location.split(",")[0]);
+    const longitude = parseFloat(location.split(",")[1]);
+
     const data = {
         "customerId": id,
         "location": {
@@ -170,4 +177,15 @@ const release = async (customerId, assistantId) => {
     });
 
     loadAssistants()
+}
+
+const parseLatLong = function (locString) {
+    if (locString == null || locString.indexOf(",") == -1 || locString.length < 3) {
+        console.error("locString is incorrect format. Expected a latitude and longitude seperated by comma.");
+        return [0, 0];
+    }
+    const location = locString.replaceAll(" ", "").split(",")
+    const latitude = parseFloat(location[0]);
+    const longitude = parseFloat(location[1]);
+    return [latitude, longitude];
 }

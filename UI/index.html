@@ -11,36 +11,30 @@
         </div>
         <div id="bottom">
             <br />
-            <span>latitude:</span><input type="text" id="uplatitude" name="latitude" value="38.23" />
-            <span>longitude:</span><input type="text" id="uplongitude" name="longitude" value="-85.77" />
+            <span>location:</span><input type="text" id="uplocation" name="uolocation" value="38.23, -85.77" />
             <span>assistant:</span><input type="text" id="upid" name="id" value="1" />
             <button value="Submit" onclick="updateAssistant(
             document.getElementById('upid').value,
-            document.getElementById('uplatitude').value,
-            document.getElementById('uplongitude').value)">
+            document.getElementById('uplocation').value)">
                 Update Assistant
             </button>
 
             <br />
             <br />
 
-            <span>latitude:</span><input type="text" id="latitude" name="latitude" value="38.22" />
-            <span>longitude:</span><input type="text" id="longitude" name="longitude" value="-85.79" />
-            <button value="Submit" onclick="getNearest(document.getElementById('latitude').value,
-            document.getElementById('longitude').value)">
+            <span>location:</span><input type="text" id="nlocation" name="nlocation" value="38.21, -85.79" />
+            <button value="Submit" onclick="getNearest(document.getElementById('nlocation').value)">
                 Get Nearest 5
             </button>
 
             <br />
             <br />
 
-            <span>latitude:</span><input type="text" id="reslatitude" name="latitude" value="38.22" />
-            <span>longitude:</span><input type="text" id="reslongitude" name="longitude" value="-85.79" />
+            <span>location:</span><input type="text" id="reslocation" name="reslocation" value="38.21, -85.79" />
             <span>customer:</span><input type="text" id="resid" name="id" value="1" />
             <button value="Submit" onclick="reserve(
             document.getElementById('resid').value,
-            document.getElementById('reslatitude').value,
-            document.getElementById('reslongitude').value)">
+            document.getElementById('reslocation').value)">
                 Reserve
             </button>
 

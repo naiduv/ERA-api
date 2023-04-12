@@ -6,6 +6,7 @@ namespace EmergencyRoadsideAssistance.Services
     {
         public Task UpdateAssistantLocation(Assistant assistant, Geolocation location);
         Task<IEnumerable<Assistant>> FindNearestAssistants(Geolocation location, int limit);
+        Task<IEnumerable<Assistant>> FindNearestUnreservedAssistant(Geolocation location);
         Task ReserveAssistant(Customer customer, Assistant assistant);
         Task ReleaseAssistant(Customer customer, Assistant assistant);
         Task ReleaseAssistants();

@@ -44,7 +44,7 @@ namespace EmergencyRoadsideAssistance.Services
             if (customerHasReservation)
                 return await _dbService.CustomerReservation(customer);
 
-            var nearestAssistants = await _dbService.FindNearestAssistants(customerLocation, 1);
+            var nearestAssistants = await _dbService.FindNearestUnreservedAssistant(customerLocation);
             if (nearestAssistants.Count() == 1)
             {
                 var nearest = nearestAssistants.First();

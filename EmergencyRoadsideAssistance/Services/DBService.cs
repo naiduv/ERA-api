@@ -29,6 +29,14 @@ namespace EmergencyRoadsideAssistance.Services
                                                         order by 4 limit {limit};");
         }
 
+        public async Task<IEnumerable<Assistant>> FindNearestUnreservedAssistant(Geolocation location)
+        {
+            return await _db.QueryAsync<Assistant>($@"select a.id, a.is_reserved, a.location as loc_point, a.location <@> point({location.Longitude}, {location.Latitude}) as distance from assistant a  
+                                                        where is_reserved = false
+                                                        order by 4 limit 1;");
+        }
+
+
         public async Task ReserveAssistant(Customer customer, Assistant assistant)
         {
             await _db.ExecuteAsync($@"insert into reservation(customer_id, assistant_id, is_reserved, created_on, updated_on) values({customer.Id}, {assistant.Id}, true, now(), null) returning is_reserved;
