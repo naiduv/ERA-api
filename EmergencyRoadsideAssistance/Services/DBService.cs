@@ -20,12 +20,12 @@ namespace EmergencyRoadsideAssistance.Services
 
         public async Task UpdateAssistantLocation(Assistant assistant, Geolocation location)
         {
-            await _db.ExecuteAsync($@"update assistant set location = point({location.Latitude},{location.Longitude}) where id = {assistant.Id}");
+            await _db.ExecuteAsync($@"update assistant set location = point({location.Longitude},{location.Latitude}) where id = {assistant.Id}");
         }
 
         public async Task<IEnumerable<Assistant>> FindNearestAssistants(Geolocation location, int limit)
         {
-            return await _db.QueryAsync<Assistant>($@"select a.id, a.is_reserved, a.location as loc_point, a.location <@> point({location.Latitude}, {location.Longitude}) as distance from assistant a                                                        
+            return await _db.QueryAsync<Assistant>($@"select a.id, a.is_reserved, a.location as loc_point, a.location <@> point({location.Longitude}, {location.Latitude}) as distance from assistant a                                                        
                                                         order by 4 limit {limit};");
         }
 

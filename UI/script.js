@@ -38,13 +38,7 @@ window.onload = (event) => {
     }).addTo(map);
 
     //get assistants
-    var assistants = getAssistants().then(assistants => {
-        assistants.forEach(assistant => {
-            const loc = assistant.location;
-            const reserved = assistant.isReserved;
-            L.marker([loc.latitude, loc.longitude], { icon: reserved ? greyIcon : greenIcon, title: assistant.id+ ": " + loc.latitude + ", " + loc.longitude }).addTo(markerGroup);
-        });
-    })
+    loadAssistants()
 }
 
 
@@ -83,6 +77,10 @@ const updateAssistant = async (id, latitude, longitude) => {
         }
     });
 
+    loadAssistants()
+}
+
+function loadAssistants() {
     markerGroup.remove();
     markerGroup = L.layerGroup().addTo(map);
 
@@ -94,4 +92,47 @@ const updateAssistant = async (id, latitude, longitude) => {
         });
     })
 
+}
+
+const reserve = async (id, latitude, longitude) => {
+    const data = {
+        "customerId": id,
+        "location": {
+            "latitude": latitude,
+            "longitude": longitude
+        }
+    };
+
+    const response = await fetch('http://localhost:8080/Reservation/Reserve', {
+        method: "POST", body: JSON.stringify(data), headers: {
+            "Content-Type": "application/json"
+        }
+    });
+
+    markerGroup.remove();
+    markerGroup = L.layerGroup().addTo(map);
+
+    L.marker([latitude, longitude], { icon: redIcon, title: "c"+ id + ": " + latitude + ", " + longitude }).addTo(markerGroup);
+
+
+    const assistant = await response.json();
+    const loc = assistant.location;
+    const reserved = assistant.isReserved;
+    L.marker([loc.latitude, loc.longitude], { icon: greyIcon, title: "a"+ assistant.id + ": " + loc.latitude + ", " + loc.longitude }).addTo(markerGroup);
+
+}
+
+const release = async (customerId, assistantId) => {
+    const data = {
+        "customerId": customerId,
+        "assistantId": assistantId
+    };
+
+    const response = await fetch('http://localhost:8080/Reservation/Release', {
+        method: "PUT", body: JSON.stringify(data), headers: {
+            "Content-Type": "application/json"
+        }
+    });
+
+    loadAssistants()
 }

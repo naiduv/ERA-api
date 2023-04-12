@@ -11,8 +11,8 @@ namespace EmergencyRoadsideAssistance.Models
 
         public Geolocation(NpgsqlPoint point)
         {
-            Latitude = Convert.ToDouble(point.X);
-            Longitude = Convert.ToDouble(point.Y);
+            Longitude = Convert.ToDouble(point.X);
+            Latitude = Convert.ToDouble(point.Y);
         }
     }
 }

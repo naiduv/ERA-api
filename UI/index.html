@@ -10,7 +10,7 @@
         <br />
         <span>latitude:</span><input type="text" id="uplatitude" name="latitude" value="38.23" />
         <span>longitude:</span><input type="text" id="uplongitude" name="longitude" value="-85.77" />
-        <span>id:</span><input type="text" id="upid" name="id" value="1" />
+        <span>assistant:</span><input type="text" id="upid" name="id" value="1" />
         <button value="Submit" onclick="updateAssistant(
             document.getElementById('upid').value,
             document.getElementById('uplatitude').value,
@@ -27,6 +27,32 @@
             document.getElementById('longitude').value)">
             Get Nearest 5
         </button>
+
+        <br />
+        <br />
+
+        <span>latitude:</span><input type="text" id="reslatitude" name="latitude" value="38.22" />
+        <span>longitude:</span><input type="text" id="reslongitude" name="longitude" value="-85.79" />
+        <span>customer:</span><input type="text" id="resid" name="id" value="1" />
+        <button value="Submit" onclick="reserve(
+            document.getElementById('resid').value,
+            document.getElementById('reslatitude').value,
+            document.getElementById('reslongitude').value)">
+            Reserve
+        </button>
+
+        <br />
+        <br />
+
+        <span>customer:</span><input type="text" id="customerid" name="id" value="1" />
+        <span>assistant:</span><input type="text" id="assistantid" name="id" value="1" />
+
+        <button value="Submit" onclick="release(
+            document.getElementById('customerid').value,
+            document.getElementById('assistantid').value)">
+            Release
+        </button>
+
 
     </body>
 </html>

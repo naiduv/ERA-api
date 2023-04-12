@@ -31,7 +31,7 @@
 ![UI](./ui.png)
 
 - A simple UI is available at locahost:8200
-- Allows user to see the Assitants, Update their locations and Find the nearest 5.
+- Allows user to see the Assitants, Update locations, Find the nearest 5 and Reserve/Release.
 
 ## Database Schema
 - Postgres datbase provided
