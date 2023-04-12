@@ -26,23 +26,20 @@
 - Requires the Local Postgres Database to be available. See Running steps above.
 - After Cloning the repo, In Visual Studio, Open the Test Explorer and run tests.
 
-## Assumptions
-- Geographic distance is used in place of actual travel distance 
-- If 2 assistants are at the same distance, either is fine to be reserved
-- Customers/Assistants already exist in DB
-- Customers/Assistants can only have 1 active reservation
-- API user will provide properly formatted, valid input json
+## Map Client UI
 
-## Compromises
-- Some local issue with Npgsql prevents connecting to localhost/127.0.0.1, had to use DHCP IP 
-- Only did integration tests, since DB heavy. These require postgres running in docker locally.
-- Used Task/Async functionality in interface (so it is slightly different)
-- Needs better logging
-- Controllers Need to return better responses
+![UI](./ui.png)
 
-## Miscellaneous
-### Database Schema
-- DB: era
+- A simple UI is available at locahost:8200
+- Allows user to see the Assitants, Update their locations and Find the nearest 5.
+
+## Database Schema
+- Postgres datbase provided
+- Seeded using the init.sql script
+- DB name: era
+- Port: 15432
+- Username: era
+- Password: passowrd
 - Tables: 
   - customer
     - id
@@ -59,15 +56,20 @@
     - created_on
     - updated_on
 
-### Map View
-
-https://www.mapcustomizer.com/map/serviceproviders101
-
-- Uploading
-<br/> 38.226837, -85.721025 {C1} 
-<br/> 38.226837, -85.731025 {SP1} 
-<br/> 38.226837, -85.741025 {SP2}
-
-### Postman Collection
+## Postman Collection
 
 A Postman collection is provided with all endpoints for local testing postman_collection.json
+
+## Assumptions
+- Geographic distance is used in place of actual travel distance 
+- If 2 assistants are at the same distance, either is fine to be reserved
+- Customers/Assistants already exist in DB
+- Customers/Assistants can only have 1 active reservation
+- API user will provide properly formatted, valid input json
+
+## Compromises
+- Some local issue with Npgsql prevents connecting to localhost/127.0.0.1, had to use DHCP IP 
+- Only did integration tests, since DB heavy. These require postgres running in docker locally.
+- Used Task/Async functionality in interface (so it is slightly different)
+- Needs better logging
+- Controllers Need to return better responses

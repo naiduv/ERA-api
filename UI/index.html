@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
+        <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+        <link rel="stylesheet" href="./script.css"/>
+        <script src="./script.js"></script>
+    </head>
+    <body>
+        <div id="map"></div>
+        <br />
+        <span>latitude:</span><input type="text" id="uplatitude" name="latitude" value="38.23" />
+        <span>longitude:</span><input type="text" id="uplongitude" name="longitude" value="-85.77" />
+        <span>id:</span><input type="text" id="upid" name="id" value="1" />
+        <button value="Submit" onclick="updateAssistant(
+            document.getElementById('upid').value,
+            document.getElementById('uplatitude').value,
+            document.getElementById('uplongitude').value)">
+            Update Assistant
+        </button>
+
+        <br />
+        <br />
+
+        <span>latitude:</span><input type="text" id="latitude" name="latitude" value="38.22" />
+        <span>longitude:</span><input type="text" id="longitude" name="longitude" value="-85.79" />
+        <button value="Submit" onclick="getNearest(document.getElementById('latitude').value,
+            document.getElementById('longitude').value)">
+            Get Nearest 5
+        </button>
+
+    </body>
+</html>

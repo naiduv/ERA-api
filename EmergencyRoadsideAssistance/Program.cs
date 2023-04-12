@@ -10,7 +10,12 @@ namespace EmergencyRoadsideAssistance
             var builder = WebApplication.CreateBuilder();
 
             // Add services to the container.
-
+            var AllowAllOriginsAndHeaders = "allowAllOriginsAndHeaders";
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: AllowAllOriginsAndHeaders, builder => { builder.AllowAnyOrigin(); builder.AllowAnyMethod(); builder.AllowAnyHeader(); });
+            });
+             
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -27,9 +32,10 @@ namespace EmergencyRoadsideAssistance
 
             // Configure the HTTP request pipeline.            
             app.UseSwagger();
-            app.UseSwaggerUI();            
+            app.UseSwaggerUI();
 
             //app.UseHttpsRedirection();
+            app.UseCors(AllowAllOriginsAndHeaders);
 
             app.UseAuthorization();
 

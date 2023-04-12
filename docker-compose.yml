@@ -1,6 +1,18 @@
 version: '3.4'
 
 services:
+  web:
+    image: img-static-site-example
+    build: 
+      context: .
+      dockerfile: UI\Dockerfile
+    container_name: map-client
+    depends_on: 
+      - emergencyroadsideassistance
+    restart: always
+    ports:
+      - "8200:80"
+
   emergencyroadsideassistance:
     image: ${DOCKER_REGISTRY-}emergencyroadsideassistance
     build:
@@ -8,6 +20,8 @@ services:
       dockerfile: EmergencyRoadsideAssistance\Dockerfile
     ports:
       - 8080:80
+    depends_on: 
+      - db
     environment:
         httpPort: 80
         launchUrl: "{Scheme}://{ServiceHost}:{ServicePort}/swagger"

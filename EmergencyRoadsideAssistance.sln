@@ -9,6 +9,14 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "UnitTests\Tests.csproj", "{B107BDA2-8F27-4DEA-8990-AE8CE01D8503}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{378530CE-A54C-4F0E-B1C8-76641669A1B1}"
+	ProjectSection(SolutionItems) = preProject
+		UI\Dockerfile = UI\Dockerfile
+		UI\index.html = UI\index.html
+		UI\script.css = UI\script.css
+		UI\script.js = UI\script.js
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
