@@ -30,7 +30,7 @@
 
 ![UI](./ui.png)
 
-- A simple UI is available at locahost:8200
+- A simple UI is available at locahost:8200. See Running instruction above.
 - Allows user to see the Assitants, Update locations, Find the nearest 5 and Reserve/Release.
 
 ## Database Schema
