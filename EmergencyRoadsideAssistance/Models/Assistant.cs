@@ -1,4 +1,5 @@
 using NpgsqlTypes;
+using System.Text.Json.Serialization;
 
 namespace EmergencyRoadsideAssistance.Models
 {
@@ -6,10 +7,8 @@ namespace EmergencyRoadsideAssistance.Models
     {
         public int Id { get; set; }
         public bool IsReserved { get; set; }
-        public Geolocation Location { get; set; }
+        public NpgsqlPoint Location { get; set; }
         public double Distance { get; set; }
-        protected NpgsqlPoint LocPoint { set { Location = new Geolocation(value); } }
-
         public Assistant() { }
 
         public Assistant(int id)

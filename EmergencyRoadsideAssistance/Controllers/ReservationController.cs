@@ -34,6 +34,12 @@ namespace EmergencyRoadsideAssistance.Controllers
             return await _dbService.GetReservations(true);
         }
 
+        [HttpGet("GetReservationForCustomer")]
+        public async Task<bool> GetReservationForCustomer(int CustomerId)
+        {
+            var reservations = await _dbService.GetReservations(true);
+            return reservations.Any(x => x.CustomerId == CustomerId);
+        }
 
         [HttpPost("Reserve")]
         public async Task<Assistant> Reserve([FromBody] ReserveRequest request)

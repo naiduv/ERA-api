@@ -24,6 +24,8 @@ CREATE TABLE IF NOT EXISTS public.reservation (
    customer_id integer,
    assistant_id integer,
    is_reserved bool default false not null,
+   customer_location point,
+   assistant_location point,
    updated_on timestamptz,
    created_on timestamptz
 );

@@ -49,7 +49,7 @@ namespace EmergencyRoadsideAssistance.Services
             {
                 var nearest = nearestAssistants.First();
                 nearest.IsReserved = true;
-                await _dbService.ReserveAssistant(customer, nearest);
+                await _dbService.ReserveAssistant(customer, nearest, customerLocation);
                 return nearest;
             }
 

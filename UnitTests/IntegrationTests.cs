@@ -68,15 +68,15 @@ namespace IntegrationTests
             await roadsideAssistanceService.UpdateAssistantLocation(new Assistant(1), new Geolocation() { Latitude = 10, Longitude = 10 });
             var assistants = await dbService.GetAssistants();
             var assistant = assistants.Where(x => x.Id == 1).First();
-            Assert.Equal(10, assistant.Location.Latitude);
-            Assert.Equal(10, assistant.Location.Longitude);
+            Assert.Equal(10, assistant.Location.X);
+            Assert.Equal(10, assistant.Location.X);
 
             //update location of assistant 1 and ensure assistant location is updated
             await roadsideAssistanceService.UpdateAssistantLocation(new Assistant(1), new Geolocation() { Latitude = 11, Longitude = 11 });
             assistants = await dbService.GetAssistants();
             assistant = assistants.Where(x => x.Id == 1).First();
-            Assert.Equal(11, assistant.Location.Latitude);
-            Assert.Equal(11, assistant.Location.Longitude);
+            Assert.Equal(11, assistant.Location.X);
+            Assert.Equal(11, assistant.Location.X);
         }
 
         [Theory]

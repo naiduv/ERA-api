@@ -1,20 +1,18 @@
 
 #top {
-    height: 80%;
-    width: 90%;
+    height: 70%;
+    width: 99%;
 }
 
 #map 
 { 
     height: 100%; 
-    width: 80%;
+    width: 70%;
+    float:left;
 }
 
-#globe{
-    margin-left: 20px;
-    width: 18%
-}
-
-#globe_img {
-    width: 90%
+#reservations{
+    float: left;
+    margin-left: 5px;
+    width: 20%
 }

@@ -73,7 +73,8 @@ window.onload = (event) => {
     }).addTo(map);
 
     //get assistants
-    loadAssistants()
+    loadAssistants();
+    getReservations();
 }
 
 function loadAssistants() {
@@ -84,7 +85,7 @@ function loadAssistants() {
         assistants.forEach(assistant => {
             const loc = assistant.location;
             const reserved = assistant.isReserved;
-            L.marker([loc.latitude, loc.longitude], { icon: reserved ? greyIcon : greenIcon, title: loc.latitude + ", " + loc.longitude }).bindTooltip(assistant.id.toString(), {permanent: true, direction:'bottom'}).addTo(markerGroup);
+            L.marker([loc.y, loc.x], { icon: reserved ? greyIcon : greenIcon, title: loc.y + ", " + loc.x }).bindTooltip(assistant.id.toString(), {permanent: true, direction:'bottom'}).addTo(markerGroup);
         });
     })
 
@@ -111,7 +112,8 @@ const getNearest = async (location) => {
     assistants.forEach(assistant => {
         const loc = assistant.location;
         const reserved = assistant.isReserved;
-        L.marker([loc.latitude, loc.longitude], { icon: reserved ? greyIcon : greenIcon, title: assistant.id + ": " + loc.latitude + ", " + loc.longitude }).bindTooltip(assistant.id.toString(), { permanent: true, direction: 'bottom' }).addTo(markerGroup);
+        L.marker([loc.y, loc.x], { icon: reserved ? greyIcon : greenIcon, title: assistant.id + ": " + loc.y + ", " + loc.x }).bindTooltip(assistant.id.toString(), { permanent: true, direction: 'bottom' }).addTo(markerGroup);
+        L.polyline([[loc.y, loc.x], [latitude, longitude]], {color: 'black', weight: 1}).bindTooltip(assistant.distance.toFixed(3) + "mi", { permanent: true, direction: 'right' }).addTo(markerGroup);
     });
 }
 
@@ -133,7 +135,15 @@ const updateAssistant = async (id, location) => {
     loadAssistants()
 }
 
-const reserve = async (id, location) => {
+const reserve = async (id, location, reservationDisplay) => {    
+    if (!reservationDisplay) {
+        const customerHasReservationResponse = await fetch('http://localhost:8080/Reservation/GetReservationForCustomer?CustomerId=' + id);
+        const customerHasReservation = await customerHasReservationResponse.json();
+        if (customerHasReservation) {
+            return;
+        }
+    }
+
     const latitude = parseFloat(location.split(",")[0]);
     const longitude = parseFloat(location.split(",")[1]);
 
@@ -154,14 +164,15 @@ const reserve = async (id, location) => {
     markerGroup.remove();
     markerGroup = L.layerGroup().addTo(map);
 
-    L.marker([latitude, longitude], { icon: redIcon, title: "c"+ id + ": " + latitude + ", " + longitude }).addTo(markerGroup);
+    L.marker([latitude, longitude], { icon: redIcon, title: "c" + id + ": " + latitude + ", " + longitude }).bindTooltip(id.toString(), { permanent: true, direction: 'bottom' }).addTo(markerGroup);
 
 
     const assistant = await response.json();
     const loc = assistant.location;
     const reserved = assistant.isReserved;
-    L.marker([loc.latitude, loc.longitude], { icon: greyIcon, title: "a" + assistant.id + ": " + loc.latitude + ", " + loc.longitude }).bindTooltip(assistant.id.toString(), { permanent: true, direction: 'bottom' }).addTo(markerGroup);
+    L.marker([loc.y, loc.x], { icon: greyIcon, title: "a" + assistant.id + ": " + loc.y + ", " + loc.x }).bindTooltip(assistant.id.toString(), { permanent: true, direction: 'bottom' }).addTo(markerGroup);
 
+    getReservations();
 }
 
 const release = async (customerId, assistantId) => {
@@ -176,7 +187,9 @@ const release = async (customerId, assistantId) => {
         }
     });
 
-    loadAssistants()
+    loadAssistants();
+    getReservations();
+
 }
 
 const parseLatLong = function (locString) {
@@ -188,4 +201,15 @@ const parseLatLong = function (locString) {
     const latitude = parseFloat(location[0]);
     const longitude = parseFloat(location[1]);
     return [latitude, longitude];
+}
+
+const getReservations = async function() {
+    var response = await fetch('http://localhost:8080/Reservation/GetActive');
+    var reservations = await response.json();
+    var reservationTable = "<table><thead><tr><th>reservation</th><th>customer</th><th>assistant</th><th>distance</th></tr></thead><tbody>";
+    reservations.forEach(reservation => {
+        reservationTable += "<tr onclick=\"reserve(" + reservation.customerId + ",'" + reservation.customerLocation.y + "," + reservation.customerLocation.x + "', true)\"><td>" + reservation.id + "</td><td>" + reservation.customerId + "</td><td>" + reservation.assistantId + "</td><td>" + reservation.distance.toFixed(3) + "mi" + "</td></tr>";
+    });
+    reservationTable += "</tbody></table>";
+    document.getElementById('reservations').innerHTML = reservationTable;
 }
